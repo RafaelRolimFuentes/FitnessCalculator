@@ -1,9 +1,7 @@
 package com.rafaelfuentes.nutricao.imc.view
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.databinding.FragmentImcBinding
+import com.rafaelfuentes.nutricao.imc.Imc
 import com.rafaelfuentes.nutricao.imc.presentation.ImcPresenter
 
 class ImcFragment : Fragment(R.layout.fragment_imc), Imc.View {

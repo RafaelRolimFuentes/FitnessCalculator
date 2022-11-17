@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper_branco_claro">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/tmb_desc_complete"
+            style="@style/Theme.Nutricao.TextViewImcTmbForm"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tmb_input_layout_weight"
+            app:hintEnabled="false"
+            style="@style/Theme.Nutricao.InputLayoutEditTextForm">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tmb_edit_text_weight"
+                android:hint="@string/weight"
+                style="@style/Theme.Nutricao.InputEditTextForm"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tmb_input_layout_height"
+            app:hintEnabled="false"
+            style="@style/Theme.Nutricao.InputLayoutEditTextForm">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tmb_edit_text_height"
+                android:hint="@string/height"
+                style="@style/Theme.Nutricao.InputEditTextForm"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tmb_input_layout_age"
+            app:hintEnabled="false"
+            style="@style/Theme.Nutricao.InputLayoutEditTextForm">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tmb_edit_text_age"
+                android:hint="@string/age"
+                style="@style/Theme.Nutricao.InputEditTextForm"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.Nutricao.AutoCompleteSpinner">
+
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_exercises"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/tmb_btn_calculate"
+            android:text="@string/calculate"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:padding="0dp"
+            style="@style/Theme.Nutricao.ButtonForm"
+            />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_registers" android:icon="@drawable/ic_baseline_manage_search_24" android:title="@string/registers"/>
+    <item android:id="@+id/menu_calcs" android:title="@string/calcs"/>
+</menu>

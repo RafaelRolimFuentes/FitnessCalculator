@@ -1,4 +1,4 @@
-package com.rafaelfuentes.nutricao.imc.view
+package com.rafaelfuentes.nutricao.imc
 
 import androidx.annotation.StringRes
 

@@ -1,29 +1,25 @@
 package com.rafaelfuentes.nutricao.imc.presentation
 
 
-
 import androidx.annotation.StringRes
 import com.rafaelfuentes.nutricao.R
-import com.rafaelfuentes.nutricao.imc.view.Imc
+import com.rafaelfuentes.nutricao.imc.Imc
 
 
-class ImcPresenter(private var view: Imc.View?): Imc.Presenter {
+class ImcPresenter(private var view: Imc.View?) : Imc.Presenter {
 
     override fun calculate(weight: String, height: String) {
-        val isWeightValid = weight.isNotEmpty() && weight.toInt() > 10
-        val isHeightValid = height.isNotEmpty() && height.toInt() > 30
-
-        validate(weight, height)
-
-        if(isWeightValid && isHeightValid){
-            val imc = calculateImc(weight, height)
+        if (validate(weight, height)) {
+            val imc = calculateImc(weight.toInt(), height.toInt())
             val response = imcResponse(imc)
-            view?.showSuccess(imc,response)
+            view?.showSuccess(imc, response)
         }
     }
+
+
     @StringRes
     private fun imcResponse(imc: Double): Int {
-        return when{
+        return when {
             imc < 15 -> R.string.imc_severely_low_weight
             imc < 16 -> R.string.imc_very_low_weight
             imc < 18.5 -> R.string.imc_low_weight
@@ -35,24 +31,25 @@ class ImcPresenter(private var view: Imc.View?): Imc.Presenter {
         }
     }
 
-    private fun calculateImc(weight: String, height: String): Double {
-        val weightAsInt = weight.toDouble()
-        val heightAsInt = height.toDouble()
+    private fun calculateImc(weight: Int, height: Int): Double {
+        return weight / ((height.toDouble() / 100) * (height.toDouble() / 100))
 
-        val imc = weightAsInt/(heightAsInt/100 * heightAsInt/100)
-        return imc
     }
 
-    private fun validate(weight: String, height: String){
-        val isWeightValid = weight.isNotEmpty() && weight.toInt() > 10
-        val isHeightValid = height.isNotEmpty() && height.toInt() > 30
+    private fun validate(weight: String, height: String): Boolean {
+        val isWeightValid = weight.isNotEmpty() && !weight.startsWith("0")
+        val isHeightValid = height.isNotEmpty() && !height.startsWith("0")
+        var isTrueOrFalse = true
 
-        if(!isWeightValid)
+        if (!isWeightValid) {
             view?.showWeightError(R.string.weight_error)
-
-        if(!isHeightValid)
+            isTrueOrFalse = false
+        }
+        if (!isHeightValid) {
             view?.showHeightError(R.string.height_error)
-
+            isTrueOrFalse = false
+        }
+        return isTrueOrFalse
     }
-
 }
+

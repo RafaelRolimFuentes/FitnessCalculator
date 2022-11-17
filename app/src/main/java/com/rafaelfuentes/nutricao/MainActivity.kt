@@ -7,22 +7,30 @@ import android.os.Build
 import android.os.Build.VERSION.SDK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.rafaelfuentes.nutricao.databinding.ActivityMainBinding
 import com.rafaelfuentes.nutricao.imc.view.ImcFragment
 
 class MainActivity : AppCompatActivity(), FragmentAttachListener {
+    private lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
+
         val fragment = HomeFragment()
-        goTo(fragment)
+        goToFragmentScreen(fragment)
 
     }
-
-    override fun goTo(fragment: Fragment) {
+    
+    override fun goToFragmentScreen(fragment: Fragment) {
         if (supportFragmentManager.findFragmentById(R.id.main_fragment) == null) {
             supportFragmentManager.beginTransaction().apply {
                 add(R.id.main_fragment, fragment)
