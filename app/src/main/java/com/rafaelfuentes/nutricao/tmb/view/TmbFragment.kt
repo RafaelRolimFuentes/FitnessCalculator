@@ -16,7 +16,7 @@ import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.databinding.FragmentTmbBinding
 import com.rafaelfuentes.nutricao.common.view.CalcFragment
-import com.rafaelfuentes.nutricao.common.view.RegisterListFragment
+import com.rafaelfuentes.nutricao.registers.view.RegisterListFragment
 import com.rafaelfuentes.nutricao.tmb.Tmb
 import com.rafaelfuentes.nutricao.tmb.presentation.TmbPresenter
 
@@ -24,6 +24,10 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
     private var binding: FragmentTmbBinding? = null
     private var presenter: Tmb.Presenter? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
+
+    companion object{
+        private const val TYPE = "tmb"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,9 +95,7 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
                 }
             }
         }
-
-        override fun afterTextChanged(s: Editable?) {
-        }
+        override fun afterTextChanged(s: Editable?) {}
     }
 
     override fun showSuccess(response: Double) {
@@ -117,12 +119,17 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
         if (item.itemId == R.id.menu_calcs) {
             val fragment = CalcFragment().apply {
                 arguments = Bundle().apply {
-                    putString(CalcFragment.KEY, "tmb")
+                    putString(CalcFragment.KEY, TYPE)
                 }
             }
             fragmentAttachListener?.goToFragmentScreen(fragment)
-        }else if(item.itemId == R.id.menu_registers){
-            fragmentAttachListener?.goToFragmentScreen(RegisterListFragment())
+        } else if (item.itemId == R.id.menu_registers) {
+            val fragment = RegisterListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(RegisterListFragment.KEY, TYPE)
+                }
+            }
+            fragmentAttachListener?.goToFragmentScreen(fragment)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -150,6 +157,27 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
         super.onAttach(context)
         if (context is FragmentAttachListener)
             fragmentAttachListener = context
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding?.let {
+            val stringArrayGenre = resources.getStringArray(R.array.tmb_genre)
+            val adapterGenre = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                stringArrayGenre
+            )
+            it.autoCompleteGenre.setAdapter(adapterGenre)
+
+            val stringArrayExercise = resources.getStringArray(R.array.tmb_exercises)
+            val adapterExercise = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                stringArrayExercise
+            )
+            it.autoCompleteExercises.setAdapter(adapterExercise)
+        }
     }
 
     override fun onDestroy() {

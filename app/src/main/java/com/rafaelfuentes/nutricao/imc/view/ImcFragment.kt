@@ -13,8 +13,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
+import com.rafaelfuentes.nutricao.common.base.DependencyInjector
 import com.rafaelfuentes.nutricao.common.view.CalcFragment
-import com.rafaelfuentes.nutricao.common.view.RegisterListFragment
+import com.rafaelfuentes.nutricao.registers.view.RegisterListFragment
 import com.rafaelfuentes.nutricao.databinding.FragmentImcBinding
 import com.rafaelfuentes.nutricao.imc.Imc
 import com.rafaelfuentes.nutricao.imc.presentation.ImcPresenter
@@ -22,16 +23,22 @@ import com.rafaelfuentes.nutricao.imc.presentation.ImcPresenter
 class ImcFragment : Fragment(R.layout.fragment_imc), Imc.View {
     private var binding: FragmentImcBinding? = null
     private var presenter: Imc.Presenter? = null
-    private var fragmentAttachListener: FragmentAttachListener? =null
+    private var fragmentAttachListener: FragmentAttachListener? = null
+
+    companion object {
+        private const val TYPE = "imc"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentImcBinding.bind(view)
-        presenter = ImcPresenter(this)
+
+        presenter = ImcPresenter(this, DependencyInjector.imcRepository())
 
         binding?.let {
             it.imcEditTextWeight.addTextChangedListener(watcher)
@@ -45,6 +52,7 @@ class ImcFragment : Fragment(R.layout.fragment_imc), Imc.View {
             }
         }
     }
+
     private val watcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -53,64 +61,81 @@ class ImcFragment : Fragment(R.layout.fragment_imc), Imc.View {
                     it.imcInputLayoutWeight.error = null
                     it.imcEditTextWeight.requestFocus()
                 }
-
                 if (it.imcEditTextHeight.isFocused) {
                     it.imcInputLayoutHeight.error = null
                     it.imcEditTextHeight.requestFocus()
                 }
             }
         }
-        override fun afterTextChanged(s: Editable?) {
-        }
+        override fun afterTextChanged(s: Editable?) {}
     }
+
     private fun hideKeyboard() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding?.imcEditTextWeight?.windowToken, 0)
         imm.hideSoftInputFromWindow(binding?.imcEditTextHeight?.windowToken, 0)
     }
-    override fun showSuccess(imc: Double, msg: Int) {
+
+    override fun showRegisterList(type: String) {
+        val fragment = RegisterListFragment().apply {
+            arguments = Bundle().apply {
+                putString(RegisterListFragment.KEY, type)
+            }
+        }
+        fragmentAttachListener?.goToFragmentScreen(fragment)
+    }
+
+    override fun showDialog(imc: Double, responseImc: Int) {
         AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.imc_formatted, imc))
-            .setMessage(getString(msg))
-            .setPositiveButton(android.R.string.ok
+            .setMessage(getString(responseImc))
+            .setPositiveButton(
+                android.R.string.ok
             ) { dialog, which -> }
-            .setNegativeButton(R.string.save){dialog, which ->
-                //TODO DELEGAR PRO PRESENTER PARA ELE DELEGAR PARA O REPOSITORY PARA GRAVAR NO BANCO
+            .setNegativeButton(R.string.save) { dialog, which ->
+                presenter?.putRegister(imc, responseImc, TYPE)
             }
             .create()
             .show()
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_search, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.menu_calcs){
+        if (item.itemId == R.id.menu_calcs) {
             val fragment = CalcFragment().apply {
                 arguments = Bundle().apply {
-                    putString(CalcFragment.KEY, "imc")
+                    putString(CalcFragment.KEY, TYPE)
                 }
             }
             fragmentAttachListener?.goToFragmentScreen(fragment)
-        }else if(item.itemId == R.id.menu_registers){
-            fragmentAttachListener?.goToFragmentScreen(RegisterListFragment())
+        } else if (item.itemId == R.id.menu_registers) {
+            val fragment = RegisterListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(RegisterListFragment.KEY, TYPE)
+                }
+            }
+            fragmentAttachListener?.goToFragmentScreen(fragment)
         }
         return super.onOptionsItemSelected(item)
     }
+
     override fun showWeightError(error: Int) {
         binding?.imcInputLayoutWeight?.error = getString(error)
     }
+
     override fun showHeightError(error: Int) {
         binding?.imcInputLayoutHeight?.error = getString(error)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is FragmentAttachListener)
+        if (context is FragmentAttachListener)
             fragmentAttachListener = context
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

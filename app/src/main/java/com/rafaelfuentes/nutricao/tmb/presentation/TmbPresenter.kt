@@ -1,10 +1,9 @@
 package com.rafaelfuentes.nutricao.tmb.presentation
 
-import android.util.Log
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.tmb.Tmb
 
-class TmbPresenter(private val view: Tmb.View) : Tmb.Presenter {
+class TmbPresenter(private var view: Tmb.View) : Tmb.Presenter {
     override fun calculate(
         weight: String,
         height: String,
@@ -12,7 +11,6 @@ class TmbPresenter(private val view: Tmb.View) : Tmb.Presenter {
         genre: String,
         exercise: String
     ) {
-
         val validate = validate(weight, height, age)
 
         if (validate) {
@@ -74,4 +72,5 @@ class TmbPresenter(private val view: Tmb.View) : Tmb.Presenter {
         }
 
     }
+
 }

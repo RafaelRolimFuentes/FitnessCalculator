@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/wallpaper_branco_claro">
 
     <LinearLayout
@@ -17,7 +17,7 @@
         android:text="@string/imc_desc_complete"
         style="@style/Theme.Nutricao.TextViewImcTmbForm"/>
 
-    <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/imc_input_layout_weight"
         app:hintEnabled="false"
         style="@style/Theme.Nutricao.InputLayoutEditTextForm">
@@ -28,7 +28,7 @@
             style="@style/Theme.Nutricao.InputEditTextForm"/>
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/imc_input_layout_height"
@@ -52,7 +52,5 @@
         android:padding="0dp"
         style="@style/Theme.Nutricao.ButtonForm"
         />
-
-
     </LinearLayout>
 </ScrollView>

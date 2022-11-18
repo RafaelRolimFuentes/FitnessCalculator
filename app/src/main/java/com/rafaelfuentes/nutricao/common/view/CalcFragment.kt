@@ -36,6 +36,7 @@ class CalcFragment : Fragment(R.layout.fragment_calc) {
             }
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         binding = null

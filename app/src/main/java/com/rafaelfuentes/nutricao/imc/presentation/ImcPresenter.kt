@@ -4,16 +4,27 @@ package com.rafaelfuentes.nutricao.imc.presentation
 import androidx.annotation.StringRes
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.imc.Imc
+import com.rafaelfuentes.nutricao.imc.data.ImcCallback
+import com.rafaelfuentes.nutricao.imc.data.ImcRepository
 
 
-class ImcPresenter(private var view: Imc.View?) : Imc.Presenter {
+class ImcPresenter(private var view: Imc.View, private val repository: ImcRepository) :
+    Imc.Presenter {
 
     override fun calculate(weight: String, height: String) {
         if (validate(weight, height)) {
             val imc = calculateImc(weight.toInt(), height.toInt())
             val response = imcResponse(imc)
-            view?.showSuccess(imc, response)
+            view.showDialog(imc, response)
         }
+    }
+
+    override fun putRegister(result: Double, responseImc: Int, type: String) {
+        repository.putRegister(result, responseImc, type, object : ImcCallback {
+            override fun onComplete() {
+                view.showRegisterList(type)
+            }
+        })
     }
 
     @StringRes
@@ -32,7 +43,6 @@ class ImcPresenter(private var view: Imc.View?) : Imc.Presenter {
 
     private fun calculateImc(weight: Int, height: Int): Double {
         return weight / ((height.toDouble() / 100) * (height.toDouble() / 100))
-
     }
 
     private fun validate(weight: String, height: String): Boolean {
@@ -41,11 +51,11 @@ class ImcPresenter(private var view: Imc.View?) : Imc.Presenter {
         var isTrueOrFalse = true
 
         if (!isWeightValid) {
-            view?.showWeightError(R.string.weight_error)
+            view.showWeightError(R.string.weight_error)
             isTrueOrFalse = false
         }
         if (!isHeightValid) {
-            view?.showHeightError(R.string.height_error)
+            view.showHeightError(R.string.height_error)
             isTrueOrFalse = false
         }
         return isTrueOrFalse
