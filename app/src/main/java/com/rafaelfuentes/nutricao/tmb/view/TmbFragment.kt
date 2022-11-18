@@ -9,16 +9,14 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.rafaelfuentes.nutricao.FragmentAttachListener
+import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.databinding.FragmentTmbBinding
-import com.rafaelfuentes.nutricao.imc.view.CalcFragment
+import com.rafaelfuentes.nutricao.common.view.CalcFragment
+import com.rafaelfuentes.nutricao.common.view.RegisterListFragment
 import com.rafaelfuentes.nutricao.tmb.Tmb
 import com.rafaelfuentes.nutricao.tmb.presentation.TmbPresenter
 
@@ -123,6 +121,8 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
                 }
             }
             fragmentAttachListener?.goToFragmentScreen(fragment)
+        }else if(item.itemId == R.id.menu_registers){
+            fragmentAttachListener?.goToFragmentScreen(RegisterListFragment())
         }
         return super.onOptionsItemSelected(item)
     }

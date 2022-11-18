@@ -1,10 +1,12 @@
-package com.rafaelfuentes.nutricao
+package com.rafaelfuentes.nutricao.common.view
 
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
+import com.rafaelfuentes.nutricao.R
 
 
 class MainActivity : AppCompatActivity(), FragmentAttachListener {

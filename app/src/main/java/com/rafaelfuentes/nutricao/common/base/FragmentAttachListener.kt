@@ -1,4 +1,4 @@
-package com.rafaelfuentes.nutricao
+package com.rafaelfuentes.nutricao.common.base
 
 import androidx.fragment.app.Fragment
 

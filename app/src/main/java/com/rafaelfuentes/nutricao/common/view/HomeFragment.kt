@@ -1,9 +1,11 @@
-package com.rafaelfuentes.nutricao
+package com.rafaelfuentes.nutricao.common.view
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
+import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.databinding.FragmentHomeBinding
 import com.rafaelfuentes.nutricao.imc.view.ImcFragment
 import com.rafaelfuentes.nutricao.tmb.view.TmbFragment

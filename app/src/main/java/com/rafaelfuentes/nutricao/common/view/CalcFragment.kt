@@ -1,4 +1,4 @@
-package com.rafaelfuentes.nutricao.imc.view
+package com.rafaelfuentes.nutricao.common.view
 
 import android.os.Bundle
 import android.view.View

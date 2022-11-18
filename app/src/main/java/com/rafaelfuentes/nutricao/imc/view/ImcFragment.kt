@@ -11,8 +11,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.rafaelfuentes.nutricao.FragmentAttachListener
+import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
+import com.rafaelfuentes.nutricao.common.view.CalcFragment
+import com.rafaelfuentes.nutricao.common.view.RegisterListFragment
 import com.rafaelfuentes.nutricao.databinding.FragmentImcBinding
 import com.rafaelfuentes.nutricao.imc.Imc
 import com.rafaelfuentes.nutricao.imc.presentation.ImcPresenter
@@ -91,6 +93,8 @@ class ImcFragment : Fragment(R.layout.fragment_imc), Imc.View {
                 }
             }
             fragmentAttachListener?.goToFragmentScreen(fragment)
+        }else if(item.itemId == R.id.menu_registers){
+            fragmentAttachListener?.goToFragmentScreen(RegisterListFragment())
         }
         return super.onOptionsItemSelected(item)
     }
