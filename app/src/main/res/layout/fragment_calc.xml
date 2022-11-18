@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper_branco_claro"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/imc_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@drawable/calc_text_background_imc"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_view_calc_imc"
+        android:text="@string/calc_imc_title"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/equacao_imc"
+            android:layout_marginTop="10dp"
+            android:textSize="18sp"
+            android:text="@string/calc_imc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tmb_male_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:gravity="center"
+        android:background="@drawable/calc_text_background_male"
+        android:padding="15dp"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/txt_view_calc_tmb_masc"
+            android:text="@string/calc_tmb_title"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/equacao_tmb_masc"
+            android:layout_marginTop="10dp"
+            android:textSize="18sp"
+            android:text="@string/tmb_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tmb_female_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:gravity="center"
+        android:background="@drawable/calc_text_background_female"
+        android:padding="15dp"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/txt_view_calc_tmb_fem"
+            android:text="@string/calc_tmb_title"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/equacao_tmb_fem"
+            android:layout_marginTop="10dp"
+            android:textSize="18sp"
+            android:text="@string/tmb_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

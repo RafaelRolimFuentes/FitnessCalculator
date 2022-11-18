@@ -59,6 +59,17 @@
             style="@style/Theme.Nutricao.AutoCompleteSpinner">
 
             <AutoCompleteTextView
+                android:id="@+id/auto_complete_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.Nutricao.AutoCompleteSpinner">
+
+            <AutoCompleteTextView
                 android:id="@+id/auto_complete_exercises"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

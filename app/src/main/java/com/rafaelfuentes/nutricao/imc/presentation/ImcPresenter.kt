@@ -16,7 +16,6 @@ class ImcPresenter(private var view: Imc.View?) : Imc.Presenter {
         }
     }
 
-
     @StringRes
     private fun imcResponse(imc: Double): Int {
         return when {

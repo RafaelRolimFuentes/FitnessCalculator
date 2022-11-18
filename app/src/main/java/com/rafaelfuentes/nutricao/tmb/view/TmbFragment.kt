@@ -1,23 +1,36 @@
 package com.rafaelfuentes.nutricao.tmb.view
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.rafaelfuentes.nutricao.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.databinding.FragmentTmbBinding
+import com.rafaelfuentes.nutricao.imc.view.CalcFragment
 import com.rafaelfuentes.nutricao.tmb.Tmb
 import com.rafaelfuentes.nutricao.tmb.presentation.TmbPresenter
 
-class TmbFragment: Fragment(R.layout.fragment_tmb), Tmb.View {
+class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
     private var binding: FragmentTmbBinding? = null
     private var presenter: Tmb.Presenter? = null
+    private var fragmentAttachListener: FragmentAttachListener? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,10 +39,23 @@ class TmbFragment: Fragment(R.layout.fragment_tmb), Tmb.View {
         presenter = TmbPresenter(this)
 
         binding?.let {
-            val stringArray = resources.getStringArray(R.array.tmb_exercises)
-            it.autoCompleteExercises.setText(stringArray.first())
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, stringArray)
-            it.autoCompleteExercises.setAdapter(adapter)
+            val stringArrayGenre = resources.getStringArray(R.array.tmb_genre)
+            it.autoCompleteGenre.setText(stringArrayGenre.first())
+            val adapterGenre = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                stringArrayGenre
+            )
+            it.autoCompleteGenre.setAdapter(adapterGenre)
+
+            val stringArrayExercise = resources.getStringArray(R.array.tmb_exercises)
+            it.autoCompleteExercises.setText(stringArrayExercise.first())
+            val adapterExercise = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                stringArrayExercise
+            )
+            it.autoCompleteExercises.setAdapter(adapterExercise)
 
             it.tmbEditTextWeight.addTextChangedListener(watcher)
             it.tmbEditTextHeight.addTextChangedListener(watcher)
@@ -39,17 +65,16 @@ class TmbFragment: Fragment(R.layout.fragment_tmb), Tmb.View {
                 val weight = binding?.tmbEditTextWeight?.text.toString()
                 val height = binding?.tmbEditTextHeight?.text.toString()
                 val age = binding?.tmbEditTextAge?.text.toString()
-                val spinnerText = binding?.autoCompleteExercises?.text.toString()
-                presenter?.calculate(weight, height, age, spinnerText)
+                val genre = binding?.autoCompleteGenre?.text.toString()
+                val exercise = binding?.autoCompleteExercises?.text.toString()
+                presenter?.calculate(weight, height, age, genre, exercise)
                 hideKeyboard()
             }
         }
     }
+
     private val watcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             binding?.let {
                 if (it.tmbEditTextWeight.isFocused) {
@@ -67,31 +92,51 @@ class TmbFragment: Fragment(R.layout.fragment_tmb), Tmb.View {
                     it.tmbInputLayoutAge.requestFocus()
                 }
             }
-
         }
 
         override fun afterTextChanged(s: Editable?) {
         }
-
     }
 
-    override fun showSuccess() {
-        Toast.makeText(requireContext(), "Deu", Toast.LENGTH_LONG).show()
+    override fun showSuccess(response: Double) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.tmb_title)
+            .setMessage(getString(R.string.tmb_formatted, response))
+            .setPositiveButton(android.R.string.ok) { a, b -> }
+            .setNegativeButton(R.string.save) { a, b ->
+                //TODO DELEGAR PRO PRESENTER PARA ELE DELEGAR PARA O REPOSITORY PARA GRAVAR NO BANCO
+            }
+            .create()
+            .show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_calcs) {
+            val fragment = CalcFragment().apply {
+                arguments = Bundle().apply {
+                    putString(CalcFragment.KEY, "tmb")
+                }
+            }
+            fragmentAttachListener?.goToFragmentScreen(fragment)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun showWeightError(error: Int) {
         binding?.tmbInputLayoutWeight?.error = getString(error)
-
     }
 
     override fun showHeightError(error: Int) {
         binding?.tmbInputLayoutHeight?.error = getString(error)
-
     }
 
     override fun showAgeError(error: Int) {
         binding?.tmbInputLayoutAge?.error = getString(error)
-
     }
 
     private fun hideKeyboard() {
@@ -101,9 +146,16 @@ class TmbFragment: Fragment(R.layout.fragment_tmb), Tmb.View {
         imm.hideSoftInputFromWindow(binding?.tmbEditTextAge?.windowToken, 0)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is FragmentAttachListener)
+            fragmentAttachListener = context
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         binding = null
         presenter = null
+        fragmentAttachListener = null
     }
 }

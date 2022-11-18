@@ -8,6 +8,8 @@
     <string name="height">Altura (cm)</string>
     <string name="calculate">Calcular</string>
     <string name="imc_formatted">IMC: %1$.2f</string>
+    <string name="tmb_title">TMB</string>
+    <string name="tmb_formatted">Resultado: %1$.2f calorias diárias</string>
 
     <string name="imc_severely_low_weight">Severamente abaixo do peso</string>
     <string name="imc_very_low_weight">Muito abaixo do peso</string>
@@ -25,4 +27,9 @@
     <string name="search">Registros</string>
     <string name="registers">Registros</string>
     <string name="calcs">Cálculos</string>
+    <string name="calc_imc">Índice de Massa Corporal = Massa / Altura²</string>
+    <string name="calc_imc_title">Cálculo de IMC:</string>
+    <string name="calc_tmb_title">Cálculo de TMB:</string>
+    <string name="tmb_male">Taxa Metabólica Basal (Homem) = 66 + (Peso * 13.8) + (Altura * 5) - (Idade * 6.8)</string>
+    <string name="tmb_female">Taxa Metabólica Basal (Mulher) = 655 + (Peso * 9.6) + (Altura * 1.8) - (Idade * 4.7)</string>
 </resources>

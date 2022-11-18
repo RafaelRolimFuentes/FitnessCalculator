@@ -7,4 +7,9 @@
         <item>Exercício pesado. 6 a 7 dias por semana</item>
         <item>Exercício pesado diariamente e até 2x por dia</item>
     </string-array>
+    
+    <string-array name="tmb_genre">
+        <item>Mulher</item>
+        <item>Homem</item>
+    </string-array>
 </resources>
