@@ -1,40 +1,37 @@
 package com.rafaelfuentes.nutricao.registers.data
 
-import android.os.Handler
-import android.os.Looper
 import com.rafaelfuentes.nutricao.common.model.App
 import com.rafaelfuentes.nutricao.common.model.Register
-import java.util.concurrent.Executors
+import kotlinx.coroutines.*
 
 class RegistersDataSource : DataSource {
-    private var executor = Executors.newSingleThreadExecutor()
-    private var handler = Handler(Looper.getMainLooper())
 
     override fun getRegistersBy(type: String, callback: RegistersCallback) {
-        executor.execute {
 
+        CoroutineScope(Dispatchers.IO).launch {
             val dao = App.db.getDao()
-            val responseList = dao.getRegistersBy(type)
+            val responseList = async { dao.getRegistersBy(type) }
+            val mutableList = responseList.await()
 
-            if (responseList.isEmpty()) {
-                handler.post {
+            if (mutableList.isEmpty()) {
+                withContext(Dispatchers.Main) {
                     callback.onFailure()
                 }
             } else {
-                handler.post {
-                    callback.onSuccess(responseList)
+                withContext(Dispatchers.Main) {
+                    callback.onSuccess(mutableList)
                 }
             }
         }
     }
 
     override fun deleteRegister(register: Register, callback: RegistersCallback) {
-        executor.execute {
+        CoroutineScope(Dispatchers.IO).launch {
             val dao = App.db.getDao()
             dao.deleteRegister(register)
 
-            handler.post {
-             callback.onComplete()
+            withContext(Dispatchers.Main) {
+                callback.onComplete()
             }
         }
     }
