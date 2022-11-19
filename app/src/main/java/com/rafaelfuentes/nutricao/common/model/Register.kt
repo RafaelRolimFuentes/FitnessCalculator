@@ -9,7 +9,7 @@ import java.util.*
 data class Register(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "result") val result: Double,
-    @ColumnInfo(name = "response_imc")@StringRes val responseImc: Int,
+    @ColumnInfo(name = "response_imc")@StringRes val responseImc: Int?,
     @ColumnInfo(name = "type") val type: String,
     @ColumnInfo(name = "created_date") val createdDate: Date = Date()
 )

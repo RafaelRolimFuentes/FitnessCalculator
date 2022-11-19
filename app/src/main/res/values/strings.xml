@@ -19,10 +19,10 @@
     <string name="imc_severely_high_weight">Severamente obeso</string>
     <string name="imc_extreme_weight">Extremamente obeso</string>
     <string name="save">Salvar</string>
-    <string name="weight_error">Peso deve ser preenchido e não iniciar com zero</string>
-    <string name="height_error">Altura deve ser preenchida e não iniciar com zero</string>
+    <string name="weight_error">Peso deve ser preenchido.(não iniciar com zero)</string>
+    <string name="height_error">Altura deve ser preenchida.(não iniciar com zero)</string>
     <string name="age">Idade</string>
-    <string name="age_error">Idade deve ser preenchida e maior que zero</string>
+    <string name="age_error">Idade deve ser preenchida.(não iniciar com zero)</string>
     <string name="search">Registros</string>
     <string name="registers">Registros</string>
     <string name="calcs">Cálculos</string>
@@ -32,6 +32,6 @@
     <string name="tmb_male">Taxa Metabólica Basal (Homem) = 66 + (Peso * 13.8) + (Altura * 5) - (Idade * 6.8)</string>
     <string name="tmb_female">Taxa Metabólica Basal (Mulher) = 655 + (Peso * 9.6) + (Altura * 1.8) - (Idade * 4.7)</string>
     <string name="response_imc_list">IMC: %1$.2f(%2$s) - Data: %3$s</string>
-    <string name="response_tmb_list">TMB: %1$.2f - Data: %2$s</string>
+    <string name="response_tmb_list">TMB: %1$.2f calorias diárias - Data: %2$s</string>
     <string name="empty_list">Nenhum registro encontrado</string>
 </resources>

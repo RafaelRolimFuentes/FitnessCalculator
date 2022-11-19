@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/rafae/AndroidStudioProjects/Fitness Calculator/app/src/main/res/drawable/background_btn.xml" value="0.126" />
         <entry key="..\:/Users/rafae/AndroidStudioProjects/Fitness Calculator/app/src/main/res/drawable/calc_text_background.xml" value="0.196" />
         <entry key="..\:/Users/rafae/AndroidStudioProjects/Fitness Calculator/app/src/main/res/drawable/calc_text_background_female.xml" value="0.196" />
         <entry key="..\:/Users/rafae/AndroidStudioProjects/Fitness Calculator/app/src/main/res/drawable/calc_text_background_male.xml" value="0.1455" />

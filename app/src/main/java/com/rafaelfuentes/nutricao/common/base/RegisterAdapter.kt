@@ -19,14 +19,12 @@ class RegisterAdapter(private var listUser: List<Register>, private val type: St
 
         fun bind(register: Register){
 
-            val responseImc = itemView.context.getString(register.responseImc)
-
             if(type == "imc"){
+                val responseImc = itemView.context.getString(register.responseImc!!)
                 textView.text = itemView.context.getString(R.string.response_imc_list, register.result, responseImc, register.createdDate.format())
 
             }else if(type == "tmb"){
-                textView.text = itemView.context.getString(R.string.response_tmb_list, register.result, register.createdDate)
-
+                textView.text = itemView.context.getString(R.string.response_tmb_list, register.result, register.createdDate.format())
             }
         }
     }
@@ -34,10 +32,6 @@ class RegisterAdapter(private var listUser: List<Register>, private val type: St
 
     override fun onBindViewHolder(holder: RegisterViewHolder, position: Int) {
         holder.bind(listUser[position])
-
     }
-
     override fun getItemCount() = listUser.size
-
-
 }

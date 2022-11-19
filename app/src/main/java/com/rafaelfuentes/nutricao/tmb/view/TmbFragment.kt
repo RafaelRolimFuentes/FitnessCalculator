@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
+import com.rafaelfuentes.nutricao.common.base.DependencyInjector
 import com.rafaelfuentes.nutricao.databinding.FragmentTmbBinding
 import com.rafaelfuentes.nutricao.common.view.CalcFragment
 import com.rafaelfuentes.nutricao.registers.view.RegisterListFragment
@@ -25,7 +26,7 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
     private var presenter: Tmb.Presenter? = null
     private var fragmentAttachListener: FragmentAttachListener? = null
 
-    companion object{
+    companion object {
         private const val TYPE = "tmb"
     }
 
@@ -38,7 +39,7 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTmbBinding.bind(view)
 
-        presenter = TmbPresenter(this)
+        presenter = TmbPresenter(this, DependencyInjector.tmbRepository())
 
         binding?.let {
             val stringArrayGenre = resources.getStringArray(R.array.tmb_genre)
@@ -95,16 +96,26 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
                 }
             }
         }
+
         override fun afterTextChanged(s: Editable?) {}
     }
 
-    override fun showSuccess(response: Double) {
+    override fun showRegisterList(type: String) {
+        val fragment = RegisterListFragment().apply {
+            arguments = Bundle().apply {
+                putString(RegisterListFragment.KEY, type)
+            }
+        }
+        fragmentAttachListener?.goToFragmentScreen(fragment)
+    }
+
+    override fun showDialog(result: Double) {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.tmb_title)
-            .setMessage(getString(R.string.tmb_formatted, response))
-            .setPositiveButton(android.R.string.ok) { a, b -> }
-            .setNegativeButton(R.string.save) { a, b ->
-                //TODO DELEGAR PRO PRESENTER PARA ELE DELEGAR PARA O REPOSITORY PARA GRAVAR NO BANCO
+            .setMessage(getString(R.string.tmb_formatted, result))
+            .setPositiveButton(android.R.string.ok) { dialog, which -> }
+            .setNegativeButton(R.string.save) { dialog, which ->
+                presenter?.putRegister(result, TYPE)
             }
             .create()
             .show()
