@@ -1,17 +1,16 @@
 package com.rafaelfuentes.nutricao.common.base
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.recyclerview.widget.RecyclerView
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.common.model.Register
 import com.rafaelfuentes.nutricao.common.util.format
+import com.rafaelfuentes.nutricao.registers.data.RegisterListClick
 
-class RegisterAdapter(private var listUser: List<Register>, private val type: String?): RecyclerView.Adapter<RegisterAdapter.RegisterViewHolder>() {
+class RegisterAdapter(private var listUser: MutableList<Register>, private val type: String?, private val listener: RegisterListClick): RecyclerView.Adapter<RegisterAdapter.RegisterViewHolder>() {
 
     inner class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
@@ -25,6 +24,11 @@ class RegisterAdapter(private var listUser: List<Register>, private val type: St
 
             }else if(type == "tmb"){
                 textView.text = itemView.context.getString(R.string.response_tmb_list, register.result, register.createdDate.format())
+            }
+
+            textView.setOnLongClickListener {
+                listener.onLongClick(adapterPosition, register, listUser)
+                true
             }
         }
     }

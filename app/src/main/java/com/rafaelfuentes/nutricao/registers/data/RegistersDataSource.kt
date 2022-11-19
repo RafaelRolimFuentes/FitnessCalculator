@@ -2,8 +2,8 @@ package com.rafaelfuentes.nutricao.registers.data
 
 import android.os.Handler
 import android.os.Looper
-import com.rafaelfuentes.nutricao.common.base.RegistersCallback
 import com.rafaelfuentes.nutricao.common.model.App
+import com.rafaelfuentes.nutricao.common.model.Register
 import java.util.concurrent.Executors
 
 class RegistersDataSource : DataSource {
@@ -18,12 +18,23 @@ class RegistersDataSource : DataSource {
 
             if (responseList.isEmpty()) {
                 handler.post {
-                    callback.onFailure(responseList)
+                    callback.onFailure()
                 }
             } else {
                 handler.post {
                     callback.onSuccess(responseList)
                 }
+            }
+        }
+    }
+
+    override fun deleteRegister(register: Register, callback: RegistersCallback) {
+        executor.execute {
+            val dao = App.db.getDao()
+            dao.deleteRegister(register)
+
+            handler.post {
+             callback.onComplete()
             }
         }
     }

@@ -172,6 +172,9 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
 
     override fun onResume() {
         super.onResume()
+        //TODO Melhorar a correção do bug (registros do AutoComplete desaparecem ao voltar do CalcFragment) sem usar este
+        //TODO sem usar este onResume
+
         binding?.let {
             val stringArrayGenre = resources.getStringArray(R.array.tmb_genre)
             val adapterGenre = ArrayAdapter(

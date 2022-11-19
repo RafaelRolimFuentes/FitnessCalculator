@@ -34,4 +34,8 @@
     <string name="response_imc_list">IMC: %1$.2f(%2$s) - Data: %3$s</string>
     <string name="response_tmb_list">TMB: %1$.2f calorias diárias - Data: %2$s</string>
     <string name="empty_list">Nenhum registro encontrado</string>
+    <string name="really_dalete">Deseja excluir este registro?</string>
+    <string name="no">Não</string>
+    <string name="delete">Apagar</string>
+    <string name="deleted">"Registro apagado "</string>
 </resources>
