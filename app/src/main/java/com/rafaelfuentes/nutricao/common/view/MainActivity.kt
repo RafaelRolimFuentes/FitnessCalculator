@@ -1,20 +1,27 @@
 package com.rafaelfuentes.nutricao.common.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
+import com.rafaelfuentes.nutricao.databinding.ActivityMainBinding
+import com.rafaelfuentes.nutricao.registers.view.RegisterListActivity
 
 class MainActivity : AppCompatActivity(), FragmentAttachListener {
-    private lateinit var toolbar: Toolbar
+    private var binding: ActivityMainBinding? = null
+
+    companion object{
+       const val KEY = "key"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding?.toolbar)
         supportActionBar?.title = ""
 
         val fragment = HomeFragment()
@@ -35,5 +42,17 @@ class MainActivity : AppCompatActivity(), FragmentAttachListener {
                 commit()
             }
         }
+    }
+
+    override fun goToRegisterListActivity(key: String) {
+        val intent = Intent(this, RegisterListActivity::class.java)
+        intent.putExtra(KEY, key)
+        startActivity(intent)
+    }
+
+    override fun goToCalcActivity(key: String) {
+        val intent = Intent(this, CalcActivity::class.java)
+        intent.putExtra(KEY, key)
+        startActivity(intent)
     }
 }

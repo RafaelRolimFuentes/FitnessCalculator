@@ -1,12 +1,10 @@
 package com.rafaelfuentes.nutricao.imc.presentation
 
-
 import androidx.annotation.StringRes
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.imc.Imc
 import com.rafaelfuentes.nutricao.imc.data.ImcCallback
 import com.rafaelfuentes.nutricao.imc.data.ImcRepository
-
 
 class ImcPresenter(private var view: Imc.View, private val repository: ImcRepository) :
     Imc.Presenter {

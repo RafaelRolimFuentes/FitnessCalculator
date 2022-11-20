@@ -1,24 +1,19 @@
 package com.rafaelfuentes.nutricao.common.view
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
-import com.rafaelfuentes.nutricao.R
-import com.rafaelfuentes.nutricao.databinding.FragmentCalcBinding
+import com.rafaelfuentes.nutricao.databinding.ActivityCalcBinding
 
-class CalcFragment : Fragment(R.layout.fragment_calc) {
-    private var binding: FragmentCalcBinding? = null
+class CalcActivity : AppCompatActivity() {
+    private var binding: ActivityCalcBinding? = null
 
-    companion object {
-        const val KEY = "type"
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityCalcBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentCalcBinding.bind(view)
-
-        val key = arguments?.getString(KEY)
-
+        val key = intent?.extras?.getString(MainActivity.KEY)
         key?.let {
             if (it.equals("imc")) {
                 binding?.let {

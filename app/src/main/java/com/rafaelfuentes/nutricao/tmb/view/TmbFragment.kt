@@ -16,8 +16,6 @@ import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.common.base.DependencyInjector
 import com.rafaelfuentes.nutricao.databinding.FragmentTmbBinding
-import com.rafaelfuentes.nutricao.common.view.CalcFragment
-import com.rafaelfuentes.nutricao.registers.view.RegisterListFragment
 import com.rafaelfuentes.nutricao.tmb.Tmb
 import com.rafaelfuentes.nutricao.tmb.presentation.TmbPresenter
 
@@ -101,12 +99,12 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
     }
 
     override fun showRegisterList(type: String) {
-        val fragment = RegisterListFragment().apply {
-            arguments = Bundle().apply {
-                putString(RegisterListFragment.KEY, type)
-            }
-        }
-        fragmentAttachListener?.goToFragmentScreen(fragment)
+//        val fragment = RegisterListFragment().apply {
+//            arguments = Bundle().apply {
+//                putString(RegisterListFragment.KEY, type)
+//            }
+//        }
+        fragmentAttachListener?.goToRegisterListActivity(type)
     }
 
     override fun showDialog(result: Double) {
@@ -128,19 +126,19 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_calcs) {
-            val fragment = CalcFragment().apply {
-                arguments = Bundle().apply {
-                    putString(CalcFragment.KEY, TYPE)
-                }
-            }
-            fragmentAttachListener?.goToFragmentScreen(fragment)
+//            val fragment = CalcFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString(CalcFragment.KEY, TYPE)
+//                }
+//            }
+            fragmentAttachListener?.goToCalcActivity(TYPE)
         } else if (item.itemId == R.id.menu_registers) {
-            val fragment = RegisterListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(RegisterListFragment.KEY, TYPE)
-                }
-            }
-            fragmentAttachListener?.goToFragmentScreen(fragment)
+//            val fragment = RegisterListFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString(RegisterListFragment.KEY, TYPE)
+//                }
+//            }
+            fragmentAttachListener?.goToRegisterListActivity(TYPE)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -168,30 +166,6 @@ class TmbFragment : Fragment(R.layout.fragment_tmb), Tmb.View {
         super.onAttach(context)
         if (context is FragmentAttachListener)
             fragmentAttachListener = context
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //TODO Melhorar a correção do bug (registros do AutoComplete desaparecem ao voltar do CalcFragment) sem usar este
-        //TODO sem usar este onResume
-
-        binding?.let {
-            val stringArrayGenre = resources.getStringArray(R.array.tmb_genre)
-            val adapterGenre = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_list_item_1,
-                stringArrayGenre
-            )
-            it.autoCompleteGenre.setAdapter(adapterGenre)
-
-            val stringArrayExercise = resources.getStringArray(R.array.tmb_exercises)
-            val adapterExercise = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_list_item_1,
-                stringArrayExercise
-            )
-            it.autoCompleteExercises.setAdapter(adapterExercise)
-        }
     }
 
     override fun onDestroy() {

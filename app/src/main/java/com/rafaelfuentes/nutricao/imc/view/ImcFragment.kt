@@ -14,8 +14,6 @@ import androidx.fragment.app.Fragment
 import com.rafaelfuentes.nutricao.common.base.FragmentAttachListener
 import com.rafaelfuentes.nutricao.R
 import com.rafaelfuentes.nutricao.common.base.DependencyInjector
-import com.rafaelfuentes.nutricao.common.view.CalcFragment
-import com.rafaelfuentes.nutricao.registers.view.RegisterListFragment
 import com.rafaelfuentes.nutricao.databinding.FragmentImcBinding
 import com.rafaelfuentes.nutricao.imc.Imc
 import com.rafaelfuentes.nutricao.imc.presentation.ImcPresenter
@@ -67,6 +65,7 @@ class ImcFragment : Fragment(R.layout.fragment_imc), Imc.View {
                 }
             }
         }
+
         override fun afterTextChanged(s: Editable?) {}
     }
 
@@ -77,12 +76,7 @@ class ImcFragment : Fragment(R.layout.fragment_imc), Imc.View {
     }
 
     override fun showRegisterList(type: String) {
-        val fragment = RegisterListFragment().apply {
-            arguments = Bundle().apply {
-                putString(RegisterListFragment.KEY, type)
-            }
-        }
-        fragmentAttachListener?.goToFragmentScreen(fragment)
+        fragmentAttachListener?.goToRegisterListActivity(type)
     }
 
     override fun showDialog(imc: Double, responseImc: Int) {
@@ -106,20 +100,15 @@ class ImcFragment : Fragment(R.layout.fragment_imc), Imc.View {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_calcs) {
-            val fragment = CalcFragment().apply {
-                arguments = Bundle().apply {
-                    putString(CalcFragment.KEY, TYPE)
-                }
-            }
-            fragmentAttachListener?.goToFragmentScreen(fragment)
-        } else if (item.itemId == R.id.menu_registers) {
-            val fragment = RegisterListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(RegisterListFragment.KEY, TYPE)
-                }
-            }
-            fragmentAttachListener?.goToFragmentScreen(fragment)
-        }
+//            val fragment = CalcFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString(CalcFragment.KEY, TYPE)
+//                }
+//            }
+            fragmentAttachListener?.goToCalcActivity(TYPE)
+        } else if (item.itemId == R.id.menu_registers)
+            fragmentAttachListener?.goToRegisterListActivity(TYPE)
+
         return super.onOptionsItemSelected(item)
     }
 
